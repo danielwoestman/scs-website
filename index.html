@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>State Report Card Helper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #033F63;
+      --color-primary-dark: #022a42;
+      --color-accent: #f4a127;
+      --color-bg: #fafbfc;
+      --color-text: #1a2a3a;
+      --color-text-muted: #5a6a7a;
+      --color-white: #ffffff;
+      --color-border: #e2e8f0;
+      --font-display: 'Source Serif 4', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 4rem;
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-img {
+      height: 40px;
+      width: auto;
+    }
+
+    .header-buttons {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.65rem 1.25rem;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--color-primary);
+      border: 1.5px solid var(--color-primary);
+    }
+
+    .btn-secondary:hover {
+      background: var(--color-primary);
+      color: var(--color-white);
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: var(--color-white);
+    }
+
+    .btn-primary:hover {
+      background: var(--color-primary-dark);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 5rem 4rem 4rem;
+      text-align: center;
+      background: linear-gradient(180deg, var(--color-white) 0%, var(--color-bg) 100%);
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--color-text);
+      max-width: 700px;
+      margin: 0 auto 1.25rem;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--color-text-muted);
+      max-width: 580px;
+      margin: 0 auto 2rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .hero-buttons .btn {
+      padding: 0.85rem 1.75rem;
+      font-size: 1rem;
+    }
+
+    .price-note {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+    }
+
+    .screenshot {
+      max-width: 900px;
+      margin: 0 auto;
+      border-radius: 12px;
+      box-shadow: 0 25px 80px rgba(3, 63, 99, 0.15), 0 10px 30px rgba(0,0,0,0.08);
+      border: 1px solid var(--color-border);
+      background: var(--color-white);
+      overflow: hidden;
+    }
+
+    .screenshot-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Value Props */
+    .value-section {
+      padding: 5rem 4rem;
+    }
+
+    .value-section h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--color-text);
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .value-card {
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    .value-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+
+    .value-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: white;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .value-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      color: var(--color-text);
+    }
+
+    .value-card p {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* How It Works */
+    .how-section {
+      padding: 5rem 4rem;
+      background: var(--color-white);
+    }
+
+    .how-section h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--color-text);
+    }
+
+    .steps {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .step {
+      text-align: center;
+      flex: 1;
+      position: relative;
+    }
+
+    .step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 28px;
+      right: -1.5rem;
+      width: 3rem;
+      height: 2px;
+      background: var(--color-border);
+    }
+
+    .step-number {
+      width: 56px;
+      height: 56px;
+      background: var(--color-bg);
+      border: 2px solid var(--color-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .step h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .step p {
+      font-size: 0.9rem;
+      color: var(--color-text-muted);
+    }
+
+    /* Credibility */
+    .credibility {
+      padding: 4rem;
+      text-align: center;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      color: var(--color-white);
+    }
+
+    .credibility p {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .credibility .subtitle {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      opacity: 0.85;
+      margin-top: 1rem;
+    }
+
+    /* Footer */
+    footer {
+      padding: 2rem 4rem;
+      background: var(--color-white);
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-links a {
+      color: var(--color-text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .footer-links a:hover {
+      color: var(--color-primary);
+    }
+
+    .footer-copy {
+      color: var(--color-text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        padding: 1rem 1.5rem;
+      }
+
+      .hero {
+        padding: 3rem 1.5rem;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .value-section,
+      .how-section {
+        padding: 3rem 1.5rem;
+      }
+
+      .value-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .steps {
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .step:not(:last-child)::after {
+        display: none;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="#" class="logo">
+      <img src="logo.png" alt="Student Centered Services" class="logo-img">
+    </a>
+    <div class="header-buttons">
+      <a href="https://district-data-comparison-k565n8rzd-danielwoestmans-projects.vercel.app/demo" class="btn btn-secondary">Try Demo</a>
+      <a href="https://district-data-comparison-k565n8rzd-danielwoestmans-projects.vercel.app" class="btn btn-primary">Login</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Understand Your School's Performance in Minutes</h1>
+    <p>Turn Illinois accountability data into clear, actionable comparisons for your board and leadership team.</p>
+    <div class="hero-buttons">
+      <a href="https://district-data-comparison-k565n8rzd-danielwoestmans-projects.vercel.app/demo" class="btn btn-secondary">Try Demo</a>
+      <a href="https://district-data-comparison-k565n8rzd-danielwoestmans-projects.vercel.app" class="btn btn-primary">Sign Up Today!</a>
+    </div>
+    <div class="screenshot">
+      <img src="screenshot.png" alt="State Report Card Helper showing peer comparison data" class="screenshot-img">
+    </div>
+  </section>
+
+  <section class="value-section">
+    <h2>Stop wrestling with spreadsheets</h2>
+    <div class="value-grid">
+      <div class="value-card">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Compare with peers</h3>
+        <p>See how your school stacks up against similar schools across Illinois with meaningful, apples-to-apples comparisons.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <h3>Board-ready insights</h3>
+        <p>Generate reports your board members can actually understand—no data science degree required.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>Save hours of prep</h3>
+        <p>What used to take days of spreadsheet work now takes minutes. More time for what actually matters.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-section">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Select your school</h3>
+        <p>Find your school and see your data at a glance</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Choose comparison peers</h3>
+        <p>Pick similar schools or let us suggest matches</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Generate your report</h3>
+        <p>Get a clear, shareable summary in seconds</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="credibility">
+    <p>Built by school leaders, for school leaders—to support productive conversations about school performance.</p>
+    <p class="subtitle">Provided by Student-Centered Services.</p>
+  </section>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#">Login</a>
+      <a href="#">Contact</a>
+      <a href="#">Terms of Service & Privacy Policy</a>
+    </div>
+    <div class="footer-copy">
+      © 2025 Student-Centered Services
+    </div>
+  </footer>
+
+</body>
+</html>
